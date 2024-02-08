@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Département</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/bgound3.avif');
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 70%;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: black;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .options button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #D4AF37;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #A57C00;
+        }
+        .search-form input[type="submit"] {
+            background-color: #D4AF37;
+            color: white;
+        }
+
+        .search-form input[type="submit"]:hover {
+            background-color: #CC9900;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-2">
+    <center>
+    <div class="container my-2">
+        <div><h1 th:text="${emp.idEmp != null} ? 'Modifier Employée' : 'Ajouter Employée'"></h1></div>
+        <br>
+        <div th:if="${message}" class="alert alert-danger text-center" style="background: #F1DC94">
+            [[${message}]]
+        </div>
+        <br>
+        <form action="#" th:action="${emp.idEmp != null} ? @{/updateemp/{id}(id=${emp.idEmp})} : @{/saveemp}" th:object="${emp}" th:method="post" class="search-form" >
+            <div>
+                <label >Nom Complet :</label>
+                <div><input type="text" th:field="*{nomEmp}" style="width: 30%" required> </div>
+            </div>
+            <br>
+            <div>
+                <label >Age :</label>
+                <div><input type="number" th:field="*{age}" style="width: 30%" required> </div>
+            </div>
+            <br>
+            <div>
+                <label >Salaire :</label>
+                <div><input type="number" th:field="*{salaire}" style="width: 30%" required> </div>
+            </div>
+            <br>
+            <div>
+                <label >Departement :</label>
+                <div><select th:field="*{department}" style="width: 32%">
+                    <option th:each="dep : ${deps}" th:value="${dep.idDept}" th:text="${dep.nomDept}"></option>
+                </select></div>
+            </div>
+            <br>
+            <br>
+            <div>
+                <div><input th:type="submit" th:value="${emp.idEmp != null} ? 'Modifier' : 'Ajouter'" style="width: 15%"><input type="button" value="Cancel" class="btn btn-secondary m-2" onclick="cancelForm()" style="width: 15%"></div>
+            </div>
+        </form>
+    </div>
+    </center>
+</div>
+<script type="text/javascript">
+    function cancelForm(){
+        window.location = "/departments.html"
+    }
+</script>
+</body>
+</html>

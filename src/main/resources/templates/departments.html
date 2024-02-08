@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/bgound3.avif');
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #E8E1E1;
+            padding: 20px;
+            border: 1px solid #ddd;
+            text-align: center;
+            border-radius: 4px;
+            width: 80%;
+            margin: auto;
+            margin-top: 5%;
+        }
+
+        .container a.btn {
+            width: 50%;
+            margin-bottom: 10px;
+            background-color: #D4AF37;
+            border-color: #D4AF37;
+        }
+
+        .container a.btn:hover {
+            background-color: #A57C00;
+            border-color: #A57C00;
+        }
+        .container a.btn.btn-danger:hover{
+            background-color: red;
+            border-color: red;
+        }
+
+        .table {
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-2">
+    <div class="container my-2">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <a th:href="@{'/newdep'}" class="btn btn-primary btn-sm mb-3"> Ajouter Département </a>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-muted">Nombre de Départements</p>
+                        <h4 th:text="${nbrDep}" class="font-weight-bold"></h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-muted">Département Avec le Plus d'Employés</p>
+                        <h4 th:text="${depWithMaxNbrEmp.idDept}" class="font-weight-bold"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <table border="1" class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Nbr D'Employés</th>
+            <th>Masse Salariale</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dep : ${deps}">
+            <td th:text="${dep.idDept}"></td>
+            <td th:text="${dep.nomDept}"></td>
+            <td th:text="${dep.employees.size()}"></td>
+            <td th:text="${dep.masseSalariale()}"></td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <a th:href="@{'/editdep/' + ${dep.idDept}}" class="btn btn-primary mr-2">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a th:href="@{'/deletedep/' + ${dep.idDept}}" class="btn btn-danger"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce département ?');">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>
